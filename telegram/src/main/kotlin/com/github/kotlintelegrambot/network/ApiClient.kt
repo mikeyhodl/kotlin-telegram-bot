@@ -17,6 +17,7 @@ import com.github.kotlintelegrambot.entities.TelegramFile
 import com.github.kotlintelegrambot.entities.TelegramFile.ByByteArray
 import com.github.kotlintelegrambot.entities.TelegramFile.ByFile
 import com.github.kotlintelegrambot.entities.TelegramFile.ByFileId
+import com.github.kotlintelegrambot.entities.TelegramFile.ByInputStream
 import com.github.kotlintelegrambot.entities.TelegramFile.ByUrl
 import com.github.kotlintelegrambot.entities.Update
 import com.github.kotlintelegrambot.entities.User
@@ -48,6 +49,7 @@ import com.github.kotlintelegrambot.types.TelegramBotResult
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.Interceptor
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -179,6 +181,18 @@ internal class ApiClient(
             secretToken = secretToken?.toMultipartBodyPart(ApiConstants.SetWebhook.SECRET_TOKEN),
         )
 
+        is ByInputStream -> service.setWebhookWithCertificateAsFile(
+            url = url.toMultipartBodyPart(ApiConstants.SetWebhook.URL),
+            certificate = certificate
+                .let { if (it.contentType != null) it else it.copy(contentType = MediaTypeConstants.UTF_8_TEXT.toMediaType()) }
+                .asMultipartBodyPart(ApiConstants.SetWebhook.CERTIFICATE),
+            ipAddress = ipAddress?.toMultipartBodyPart(ApiConstants.SetWebhook.IP_ADDRESS),
+            maxConnections = maxConnections?.toMultipartBodyPart(ApiConstants.SetWebhook.MAX_CONNECTIONS),
+            allowedUpdates = allowedUpdates?.toMultipartBodyPart(ApiConstants.SetWebhook.ALLOWED_UPDATES),
+            dropPendingUpdates = dropPendingUpdates?.toMultipartBodyPart(ApiConstants.SetWebhook.DROP_PENDING_UPDATES),
+            secretToken = secretToken?.toMultipartBodyPart(ApiConstants.SetWebhook.SECRET_TOKEN),
+        )
+
         null -> service.setWebhook(
             url = url,
             ipAddress = ipAddress,
@@ -277,11 +291,12 @@ internal class ApiClient(
         replyMarkup: ReplyMarkup?,
         messageThreadId: Long?,
     ): Call<Response<Message>> = when (photo) {
-        is ByFile, is ByByteArray -> service.sendPhoto(
+        is ByFile, is ByByteArray, is ByInputStream -> service.sendPhoto(
             chatId,
             when (photo) {
                 is ByFile -> photo.file.toMultipartBodyPart("photo")
                 is ByByteArray -> photo.fileBytes.toMultipartBodyPart("photo", photo.filename)
+                is ByInputStream -> photo.asMultipartBodyPart("photo")
                 else -> throw NotImplementedError() // KT-31622
             },
             if (caption != null) convertString(caption) else null,
@@ -323,11 +338,12 @@ internal class ApiClient(
         allowSendingWithoutReply: Boolean?,
         replyMarkup: ReplyMarkup?,
     ): Call<Response<Message>> = when (audio) {
-        is ByFile, is ByByteArray -> service.sendAudio(
+        is ByFile, is ByByteArray, is ByInputStream -> service.sendAudio(
             chatId,
             when (audio) {
                 is ByFile -> audio.file.toMultipartBodyPart("audio")
                 is ByByteArray -> audio.fileBytes.toMultipartBodyPart("audio", audio.filename)
+                is ByInputStream -> audio.asMultipartBodyPart("audio")
                 else -> throw NotImplementedError() // KT-31622
             },
             if (duration != null) convertString(duration.toString()) else null,
@@ -371,11 +387,12 @@ internal class ApiClient(
         replyMarkup: ReplyMarkup? = null,
         mimeType: String? = null,
     ): Call<Response<Message>> = when (document) {
-        is ByFile, is ByByteArray -> service.sendDocument(
+        is ByFile, is ByByteArray, is ByInputStream -> service.sendDocument(
             chatId,
             when (document) {
                 is ByFile -> document.file.toMultipartBodyPart("document", mimeType)
                 is ByByteArray -> document.fileBytes.toMultipartBodyPart("document", document.filename, mimeType)
+                is ByInputStream -> document.asMultipartBodyPart("document")
                 else -> throw NotImplementedError() // KT-31622
             },
             if (caption != null) convertString(caption) else null,
@@ -420,11 +437,12 @@ internal class ApiClient(
         allowSendingWithoutReply: Boolean?,
         replyMarkup: ReplyMarkup?,
     ): Call<Response<Message>> = when (video) {
-        is ByFile, is ByByteArray -> service.sendVideo(
+        is ByFile, is ByByteArray, is ByInputStream -> service.sendVideo(
             chatId,
             when (video) {
                 is ByFile -> video.file.toMultipartBodyPart("video")
                 is ByByteArray -> video.fileBytes.toMultipartBodyPart("video", video.filename)
+                is ByInputStream -> video.asMultipartBodyPart("video")
                 else -> throw NotImplementedError() // KT-31622
             },
             if (duration != null) convertString(duration.toString()) else null,
@@ -522,11 +540,12 @@ internal class ApiClient(
         allowSendingWithoutReply: Boolean?,
         replyMarkup: ReplyMarkup?,
     ): Call<Response<Message>> = when (animation) {
-        is ByFile, is ByByteArray -> service.sendAnimation(
+        is ByFile, is ByByteArray, is ByInputStream -> service.sendAnimation(
             chatId,
             when (animation) {
                 is ByFile -> animation.file.toMultipartBodyPart("video")
                 is ByByteArray -> animation.fileBytes.toMultipartBodyPart("video", animation.filename)
+                is ByInputStream -> animation.asMultipartBodyPart("video")
                 else -> throw NotImplementedError() // KT-31622
             },
             if (duration != null) convertString(duration.toString()) else null,
@@ -574,11 +593,12 @@ internal class ApiClient(
         allowSendingWithoutReply: Boolean?,
         replyMarkup: ReplyMarkup?,
     ): Call<Response<Message>> = when (audio) {
-        is ByFile, is ByByteArray -> service.sendVoice(
+        is ByFile, is ByByteArray, is ByInputStream -> service.sendVoice(
             chatId,
             when (audio) {
                 is ByFile -> audio.file.toMultipartBodyPart("voice", AUDIO_OGG)
                 is ByByteArray -> audio.fileBytes.toMultipartBodyPart("voice", audio.filename, AUDIO_OGG)
+                is ByInputStream -> audio.asMultipartBodyPart("voice")
                 else -> throw NotImplementedError() // KT-31622
             },
             if (caption != null) convertString(caption) else null,
