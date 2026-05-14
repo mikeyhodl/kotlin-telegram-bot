@@ -13,7 +13,7 @@ internal class LocationTest {
     @Test
     fun `should permit to inform livePeriod optional attribute value`() {
         val livePeriod = 23
-        val location = Location(2.2F, 2.5F, livePeriod)
+        val location = Location(2.2F, 2.5F, livePeriod = livePeriod)
         Assertions.assertEquals(location.livePeriod, livePeriod)
     }
 }

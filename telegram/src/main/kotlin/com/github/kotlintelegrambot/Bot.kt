@@ -1089,6 +1089,8 @@ class Bot private constructor(
         allowSendingWithoutReply: Boolean? = null,
         replyMarkup: ReplyMarkup? = null,
         proximityAlertRadius: Int? = null,
+        horizontalAccuracy: Float? = null,
+        heading: Int? = null,
     ) = apiClient.sendLocation(
         chatId,
         latitude,
@@ -1100,6 +1102,8 @@ class Bot private constructor(
         allowSendingWithoutReply,
         replyMarkup,
         proximityAlertRadius,
+        horizontalAccuracy,
+        heading,
     ).call()
 
     /**
@@ -1185,6 +1189,8 @@ class Bot private constructor(
         longitude: Float,
         replyMarkup: ReplyMarkup? = null,
         proximityAlertRadius: Int? = null,
+        horizontalAccuracy: Float? = null,
+        heading: Int? = null,
     ) = apiClient.editMessageLiveLocation(
         chatId,
         messageId,
@@ -1193,6 +1199,8 @@ class Bot private constructor(
         longitude,
         replyMarkup,
         proximityAlertRadius,
+        horizontalAccuracy,
+        heading,
     ).call()
 
     fun stopMessageLiveLocation(

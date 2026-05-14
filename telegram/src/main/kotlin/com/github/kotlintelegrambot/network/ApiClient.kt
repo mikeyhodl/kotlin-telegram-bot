@@ -709,6 +709,8 @@ internal class ApiClient(
         allowSendingWithoutReply: Boolean?,
         replyMarkup: ReplyMarkup?,
         proximityAlertRadius: Int?,
+        horizontalAccuracy: Float?,
+        heading: Int?,
     ): Call<Response<Message>> {
         return service.sendLocation(
             chatId,
@@ -721,6 +723,8 @@ internal class ApiClient(
             allowSendingWithoutReply,
             replyMarkup,
             proximityAlertRadius,
+            horizontalAccuracy,
+            heading,
         )
     }
 
@@ -732,6 +736,8 @@ internal class ApiClient(
         longitude: Float,
         replyMarkup: ReplyMarkup?,
         proximityAlertRadius: Int?,
+        horizontalAccuracy: Float?,
+        heading: Int?,
     ): Call<Response<Message>> {
         return service.editMessageLiveLocation(
             chatId,
@@ -741,6 +747,8 @@ internal class ApiClient(
             longitude,
             replyMarkup,
             proximityAlertRadius,
+            horizontalAccuracy,
+            heading,
         )
     }
 

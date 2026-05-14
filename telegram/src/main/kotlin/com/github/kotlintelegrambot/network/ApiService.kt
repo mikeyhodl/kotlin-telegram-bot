@@ -398,6 +398,8 @@ internal interface ApiService {
         @Field(ApiConstants.ALLOW_SENDING_WITHOUT_REPLY) allowSendingWithoutReply: Boolean?,
         @Field(ApiConstants.REPLY_MARKUP) replyMarkup: ReplyMarkup? = null,
         @Field("proximity_alert_radius") proximityAlertRadius: Int? = null,
+        @Field("horizontal_accuracy") horizontalAccuracy: Float? = null,
+        @Field("heading") heading: Int? = null,
     ): Call<Response<Message>>
 
     @FormUrlEncoded
@@ -410,6 +412,8 @@ internal interface ApiService {
         @Field("longitude") longitude: Float,
         @Field(ApiConstants.REPLY_MARKUP) replyMarkup: ReplyMarkup? = null,
         @Field("proximity_alert_radius") proximityAlertRadius: Int? = null,
+        @Field("horizontal_accuracy") horizontalAccuracy: Float? = null,
+        @Field("heading") heading: Int? = null,
     ): Call<Response<Message>>
 
     @FormUrlEncoded
