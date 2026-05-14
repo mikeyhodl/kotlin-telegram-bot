@@ -1,0 +1,38 @@
+# Canonical author identities for this repository.
+#
+# Format:
+#   Canonical Name <canonical@email>  Other Name <other@email>
+#
+# Git, GitHub and `git shortlog` all consult this file to display a single
+# unified identity per contributor — it does NOT rewrite commit history,
+# the underlying author objects in each commit are unchanged. See
+# `git help mailmap` for the full syntax.
+
+# --- Project maintainer (Iván) ---
+seik <9640279+seik@users.noreply.github.com> <ivanmartinga@gmail.com>
+
+# --- Long-term contributors with multiple identities ---
+Víctor Julián García Granado <vjgarciaw@gmail.com>  Víctor J. García <vjgarciaw@gmail.com>
+Víctor Julián García Granado <vjgarciaw@gmail.com>  vjgarciag96 <vjgarciaw@gmail.com>
+Víctor Julián García Granado <vjgarciaw@gmail.com>  Víctor Julián García Granado <vjgarcia@tuenti.com>
+Víctor Julián García Granado <vjgarciaw@gmail.com>  vjgarciag96 <vjgarcia@tuenti.com>
+
+Martin Petersen <martin-petersen@users.noreply.github.com>  Martin Petersen <martinrpetersen171@gmail.com>
+Martin Petersen <martin-petersen@users.noreply.github.com>  martin <martinrpetersen171@gmail.com>
+Martin Petersen <martin-petersen@users.noreply.github.com>  martin <martin.petersen@codeminer42.com>
+
+Aleksandr <red-avtovo@users.noreply.github.com> <red.avtovo@gmail.com>
+
+Anderson Guimarães Moura <andersongmoura@gmail.com>  Anderson Guimaraes Moura <andersongmoura@gmail.com>
+
+Artem Ptushkin <art.ptushkin@gmail.com> <artem_ptushkin@iptiq.com>
+
+João Gabriel Quaresma <j.quaresmasantos_98@hotmail.com>  joaoGabriel55 <j.quaresmasantos_98@hotmail.com>
+
+Joshua Storch <mail@jstorch.net> <joshua.de99@web.de>
+
+shredder2003 <shredder2003@gmail.com> <shredder2003@mail.ru>
+
+# Local-hostname commits → personal email (same author)
+Ilia Griaznov <i.b.gryaznov@gmail.com>  Ilia Griaznov <elihun@Ilias-MacBook-Pro.local>
+Ilia Griaznov <i.b.gryaznov@gmail.com>  elihun <i.b.gryaznov@gmail.com>
