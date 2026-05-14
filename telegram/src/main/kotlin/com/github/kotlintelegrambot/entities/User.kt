@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName
 data class User(
     @SerializedName("id") val id: Long,
     @SerializedName("is_bot") val isBot: Boolean,
-    @SerializedName("is_premium") val isPremium: Boolean?,
     @SerializedName("first_name") val firstName: String,
     @SerializedName("last_name") val lastName: String? = null,
     @SerializedName("username") val username: String? = null,
@@ -16,4 +15,5 @@ data class User(
     @SerializedName("can_join_groups") val canJoinGroups: Boolean? = null,
     @SerializedName("can_read_all_group_messages") val canReadAllGroupMessages: Boolean? = null,
     @SerializedName("supports_inline_queries") val supportsInlineQueries: Boolean? = null,
+    @SerializedName("is_premium") val isPremium: Boolean? = null,
 )
